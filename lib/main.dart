@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mini_app/splash_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mini_app/routes.dart';
+import 'package:mini_app/routes_map.dart';
+import 'package:mini_app/features/business/data/providers/business_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const HeyGenyMiniApp());
@@ -8,17 +12,31 @@ void main() {
 class HeyGenyMiniApp extends StatelessWidget {
   const HeyGenyMiniApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => BusinessProvider()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
+        initialRoute: Routes.splashScreen,
+        routes: RoutesMap.routes,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('fr', ''),
+        ],
       ),
-      home: const SplashScreen(),
     );
   }
 }

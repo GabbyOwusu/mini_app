@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-abstract class BusinessProvider extends ChangeNotifier {}
+class BusinessProvider extends ChangeNotifier {}
