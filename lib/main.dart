@@ -19,7 +19,7 @@ class HeyGenyMiniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => BusinessProvider()),
+        ChangeNotifierProvider(create: (context) => sl<BusinessProvider>()),
       ],
       child: MaterialApp(
         theme: ThemeData(
