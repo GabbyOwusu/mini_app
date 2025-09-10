@@ -11,9 +11,9 @@ class Business {
 
   factory Business.fromJson(Map<String, dynamic> json) {
     return Business(
-      businessName: json['businessName'],
-      businessLocation: json['businessLocation'],
-      contactNumber: json['contactNumber'],
+      businessName: json['biz_name'] ?? '',
+      businessLocation: json['bss_location'] ?? '',
+      contactNumber: json['contct_no'] ?? '',
     );
   }
 
