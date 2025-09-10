@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mini_app/core/service_locator.dart';
 import 'package:mini_app/routes.dart';
 import 'package:mini_app/routes_map.dart';
 import 'package:mini_app/features/business/data/providers/business_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  setupServiceLocator();
+
   runApp(const HeyGenyMiniApp());
 }
 
