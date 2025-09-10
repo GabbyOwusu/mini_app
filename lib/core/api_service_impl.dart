@@ -1,6 +1,6 @@
-import 'package:mini_app/core/api_service.dart';
+import 'package:mini_app/core/api/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:mini_app/core/interceptors.dart';
+import 'package:mini_app/core/interceptors/interceptors.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:mini_app/utils/constants.dart';
@@ -49,6 +49,7 @@ class ApiServiceImpl extends ApiService {
         onRequest: (options, handler) async {
           final String jsonString = await rootBundle.loadString('db.json');
           final List<dynamic> jsonData = json.decode(jsonString);
+          await Future.delayed(const Duration(seconds: 5));
           return handler.resolve(
             Response(
               requestOptions: options,
@@ -59,5 +60,21 @@ class ApiServiceImpl extends ApiService {
         },
       ),
     );
+  }
+
+  @override
+  Future<Response<T>> get<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await _dio.get<T>(
+        path,
+        queryParameters: queryParameters,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
   }
 }
