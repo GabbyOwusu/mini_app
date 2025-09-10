@@ -5,5 +5,5 @@ import 'package:mini_app/core/api_service_impl.dart';
 GetIt sl = GetIt.instance;
 
 void setupServiceLocator() {
-  sl.registerLazySingleton<ApiService>(() => ApiServiceImpl());
+  sl.registerLazySingleton<ApiService>(() => ApiServiceImpl()..init());
 }
