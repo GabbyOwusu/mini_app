@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_app/features/dashboard/presentation/widgets/business_list.dart';
+import 'package:mini_app/features/dashboard/presentation/widgets/business_list_with_error.dart';
+import 'package:mini_app/features/dashboard/presentation/widgets/business_list_with_retry.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -8,28 +10,42 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Business list',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Below are the list of businesses in your area',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 20),
-            BusinessList(),
+      appBar: AppBar(
+        title: const Text('Business List with different scenarios'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Business List'),
+            Tab(text: 'Retry'),
+            Tab(text: 'Persistent error'),
           ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          BusinessList(),
+          BusinessListWithRetry(),
+          BusinessListWithPersistentError(),
+        ],
       ),
     );
   }
