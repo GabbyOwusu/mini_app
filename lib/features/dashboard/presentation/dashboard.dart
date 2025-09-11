@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mini_app/features/dashboard/presentation/widgets/business_list.dart';
+import 'package:mini_app/features/dashboard/presentation/widgets/business_list_successful.dart';
+import 'package:mini_app/features/dashboard/presentation/widgets/business_list_with_empty_state.dart';
 import 'package:mini_app/features/dashboard/presentation/widgets/business_list_with_error.dart';
 import 'package:mini_app/features/dashboard/presentation/widgets/business_list_with_retry.dart';
+import 'package:mini_app/utils/utils.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -16,7 +18,7 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -27,15 +29,17 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Business List with different scenarios'),
+        title: Text(appLocalizations.businessListWithDifferentScenarios),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Business List'),
-            Tab(text: 'Retry'),
-            Tab(text: 'Persistent error'),
+          tabs: [
+            Tab(text: appLocalizations.businessList),
+            Tab(text: appLocalizations.retry),
+            Tab(text: appLocalizations.persistentError),
+            Tab(text: appLocalizations.empty),
           ],
         ),
       ),
@@ -45,6 +49,7 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
           BusinessList(),
           BusinessListWithRetry(),
           BusinessListWithPersistentError(),
+          BusinessListWithEmpty(),
         ],
       ),
     );

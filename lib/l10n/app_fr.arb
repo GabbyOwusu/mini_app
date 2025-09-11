@@ -1,0 +1,45 @@
+{
+  "@@locale": "fr",
+  "hello": "Bonjour {name}",
+  "@hello": {
+    "description": "Une salutation à quelqu'un",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "Le nom de la personne à saluer"
+      }
+    }
+  },
+  "businessList": "Liste des entreprises",
+  "@businessList": {
+    "description": "Une liste d'entreprises"
+  },
+  "retry": "Réessayer",
+  "@retry": {
+    "description": "Un bouton pour réessayer"
+  },
+  "persistentError": "Erreur persistante",
+  "@persistentError": {
+    "description": "Un bouton pour afficher une erreur persistante"
+  },
+  "businessListWithDifferentScenarios": "Liste des entreprises avec différents scénarios",
+  "@businessListWithDifferentScenarios": {
+    "description": "Un titre pour la liste des entreprises avec différents scénarios"
+  },
+  "loadingBusinesses": "Chargement des entreprises...",
+  "@loadingBusinesses": {
+    "description": "Un message à afficher lors du chargement des entreprises"
+  },
+  "noBusinessesFound": "Aucune entreprise trouvée",
+  "@noBusinessesFound": {
+    "description": "Un message à afficher quand aucune entreprise n'est trouvée"
+  },
+  "empty": "Vide",
+  "@empty": {
+    "description": "Un message à afficher quand la liste des entreprises est vide"
+  },
+  "somethingUnexpectedHappened": "Quelque chose d'inattendu s'est produit",
+  "@somethingUnexpectedHappened": {
+    "description": "Un message à afficher quand quelque chose d'inattendu se produit"
+  }
+}

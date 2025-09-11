@@ -1,0 +1,45 @@
+{
+  "@@locale": "en",
+  "hello": "Hello {name}",
+  "@hello": {
+    "description": "A greeting to someone",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The name of the person to greet"
+      }
+    }
+  },
+  "businessList": "Business List",
+  "@businessList": {
+    "description": "A list of businesses"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "A button to retry"
+  },
+  "persistentError": "Persistent Error",
+  "@persistentError": {
+    "description": "A button to show persistent error"
+  },
+  "businessListWithDifferentScenarios": "Business List with different scenarios",
+  "@businessListWithDifferentScenarios": {
+    "description": "A title for the business list with different scenarios"
+  },
+  "loadingBusinesses": "Loading businesses...",
+  "@loadingBusinesses": {
+    "description": "A message to show when loading businesses"
+  },
+  "noBusinessesFound": "No businesses found",
+  "@noBusinessesFound": {
+    "description": "A message to show when no businesses are found"
+  },
+  "empty": "Empty",
+  "@empty": {
+    "description": "A message to show when the business list is empty"
+  },
+  "somethingUnexpectedHappened": "Something unexpected happened",
+  "@somethingUnexpectedHappened": {
+    "description": "A message to show when something unexpected happens"
+  }
+}

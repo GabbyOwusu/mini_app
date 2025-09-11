@@ -4,44 +4,46 @@ import 'package:mini_app/features/business/data/providers/business_provider.dart
 import 'package:mini_app/features/business/models/business_model.dart';
 import 'package:mini_app/features/business/presentation/widgets/business_card.dart';
 import 'package:mini_app/utils/common.dart';
+import 'package:mini_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-class BusinessListWithPersistentError extends StatefulWidget {
-  const BusinessListWithPersistentError({super.key});
+class BusinessListWithEmpty extends StatefulWidget {
+  const BusinessListWithEmpty({super.key});
 
   @override
-  State<BusinessListWithPersistentError> createState() => _BusinessListWithPersistentErrorState();
+  State<BusinessListWithEmpty> createState() => _BusinessListWithEmptyState();
 }
 
-class _BusinessListWithPersistentErrorState extends State<BusinessListWithPersistentError> {
+class _BusinessListWithEmptyState extends State<BusinessListWithEmpty> {
   late Future<ApiResponse<List<Business>>> _businessFuture;
 
   @override
   void initState() {
     super.initState();
-    _businessFuture = context.read<BusinessProvider>().fetchBusinessWithError();
+    _businessFuture = context.read<BusinessProvider>().fetchBusinessesEmpty();
   }
 
   void _refreshBusinesses() {
     setState(() {
-      _businessFuture = context.read<BusinessProvider>().fetchBusinessWithError();
+      _businessFuture = context.read<BusinessProvider>().fetchBusinessesEmpty();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = context.l10n;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: FutureBuilder<ApiResponse<List<Business>>>(
         future: _businessFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return Center(
               child: Column(
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Loading businesses...'),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(appLocalizations.loadingBusinesses),
                 ],
               ),
             );
@@ -62,8 +64,9 @@ class _BusinessListWithPersistentErrorState extends State<BusinessListWithPersis
             }
             if (response.data!.isEmpty) {
               return EmptyState(
-                errorMessage: 'No businesses found',
-                onPressed: _refreshBusinesses,
+                icon: Icons.business,
+                title: appLocalizations.noBusinessesFound,
+                errorMessage: appLocalizations.noBusinessesFound,
               );
             }
             return Column(
@@ -76,8 +79,8 @@ class _BusinessListWithPersistentErrorState extends State<BusinessListWithPersis
               }).toList(),
             );
           }
-          return const Center(
-            child: Text('Something unexpected happened'),
+          return Center(
+            child: Text(appLocalizations.somethingUnexpectedHappened),
           );
         },
       ),

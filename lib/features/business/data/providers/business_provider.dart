@@ -10,4 +10,6 @@ abstract class BusinessProvider extends ChangeNotifier {
   Future<ApiResponse<List<Business>>> fetchBusinessWithError();
 
   Future<void> fetchBusinessesFromLocalStorage();
+
+  Future<ApiResponse<List<Business>>> fetchBusinessesEmpty();
 }

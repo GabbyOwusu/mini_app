@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mini_app/core/service_locator.dart';
 import 'package:mini_app/routes.dart';
 import 'package:mini_app/routes_map.dart';
@@ -31,6 +32,7 @@ class HeyGenyMiniApp extends StatelessWidget {
         initialRoute: Routes.splashScreen,
         routes: RoutesMap.routes,
         localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

@@ -5,4 +5,6 @@ abstract class BusinessService {
   Future<ApiResponse<List<Business>>> getBusinesses();
 
   Future<ApiResponse<List<Business>>> getBusinessesWithError();
+
+  Future<ApiResponse<List<Business>>> getBusinessesEmpty();
 }

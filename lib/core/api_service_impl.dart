@@ -43,6 +43,10 @@ class ApiServiceImpl extends ApiService {
     }
 
     _dio.interceptors.add(AuthInterceptor());
+    _dio.interceptors.add(LoadingDelayInterceptor(
+      delay: AppConstants.loadingDelay,
+      enableDelay: AppConstants.enableLoadingDelay,
+    ));
 
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -53,12 +57,23 @@ class ApiServiceImpl extends ApiService {
               response: Response(
                 requestOptions: options,
                 statusCode: 500,
+                data: {'message': 'Internal Server Error'},
               ),
             ));
           }
+
+          if (options.path == '/empty') {
+            return handler.resolve(
+              Response(
+                requestOptions: options,
+                data: [],
+                statusCode: 200,
+              ),
+            );
+          }
+
           final String jsonString = await rootBundle.loadString('db.json');
           final List<dynamic> jsonData = json.decode(jsonString);
-          await Future.delayed(const Duration(seconds: 3));
           return handler.resolve(
             Response(
               requestOptions: options,

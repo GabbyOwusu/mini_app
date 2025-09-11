@@ -13,4 +13,8 @@ class AppConstants {
   static const Duration initialRetryDelay = Duration(milliseconds: 500);
   static const double retryMultiplier = 2.0;
   static const Duration maxRetryDelay = Duration(seconds: 30);
+
+  // Loading delay configuration
+  static const Duration loadingDelay = Duration(seconds: 3);
+  static const bool enableLoadingDelay = true;
 }

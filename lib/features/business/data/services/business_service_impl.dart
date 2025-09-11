@@ -38,4 +38,17 @@ class BusinessServiceImpl extends BusinessService {
       rethrow;
     }
   }
+
+  @override
+  Future<ApiResponse<List<Business>>> getBusinessesEmpty() async {
+    try {
+      final response = await apiService.get('/empty');
+      return ApiResponse.fromJsonList(
+        response: response,
+        creator: (list) => list.map((json) => Business.fromJson(json)).toList(),
+      );
+    } on DioException catch (_) {
+      rethrow;
+    }
+  }
 }

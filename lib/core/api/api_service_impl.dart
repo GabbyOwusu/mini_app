@@ -44,13 +44,27 @@ class ApiServiceImpl extends ApiService {
 
     _dio.interceptors.add(AuthInterceptor());
 
+    _dio.interceptors.add(LoadingDelayInterceptor(
+      delay: AppConstants.loadingDelay,
+      enableDelay: AppConstants.enableLoadingDelay,
+    ));
+
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final String jsonString = await rootBundle.loadString('db.json');
-          final List<dynamic> jsonData = json.decode(jsonString);
-          await Future.delayed(const Duration(seconds: 5));
+          if (options.path == '/empty') {
+            return handler.resolve(
+              Response(
+                requestOptions: options,
+                data: [],
+                statusCode: 200,
+              ),
+            );
+          }
           if (options.path == '/businesses') {
+            final String jsonString = await rootBundle.loadString('db.json');
+            final List<dynamic> jsonData = json.decode(jsonString);
+            await Future.delayed(const Duration(seconds: 3));
             return handler.resolve(
               Response(
                 requestOptions: options,
@@ -71,7 +85,7 @@ class ApiServiceImpl extends ApiService {
           return handler.resolve(
             Response(
               requestOptions: options,
-              data: jsonData,
+              data: [],
               statusCode: 200,
             ),
           );

@@ -73,3 +73,20 @@ class AuthInterceptor extends Interceptor {
     return handler.next(options);
   }
 }
+
+class LoadingDelayInterceptor extends Interceptor {
+  final Duration delay;
+  final bool enableDelay;
+
+  LoadingDelayInterceptor({required this.delay, required this.enableDelay});
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    if (enableDelay) {
+      await Future.delayed(delay);
+      return handler.next(options);
+    } else {
+      return handler.next(options);
+    }
+  }
+}

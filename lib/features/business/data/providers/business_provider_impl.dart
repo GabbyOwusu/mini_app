@@ -76,7 +76,21 @@ class BusinessProviderImpl extends BusinessProvider {
       handleError(e);
       return ApiResponse(
         data: <Business>[],
-        errorMessage: 'An unexpected error occurred: $e',
+        errorMessage: 'An unexpected error occurred',
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<List<Business>>> fetchBusinessesEmpty() async {
+    try {
+      final response = await businessService.getBusinessesEmpty();
+      return response;
+    } catch (e) {
+      handleError(e);
+      return ApiResponse(
+        data: <Business>[],
+        errorMessage: 'An unexpected error occurred',
       );
     }
   }

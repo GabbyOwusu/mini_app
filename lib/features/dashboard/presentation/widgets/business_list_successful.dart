@@ -4,6 +4,7 @@ import 'package:mini_app/features/business/data/providers/business_provider.dart
 import 'package:mini_app/features/business/models/business_model.dart';
 import 'package:mini_app/features/business/presentation/widgets/business_card.dart';
 import 'package:mini_app/utils/common.dart';
+import 'package:mini_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class BusinessList extends StatefulWidget {
@@ -30,6 +31,7 @@ class _BusinessListState extends State<BusinessList> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = context.l10n;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Consumer<BusinessProvider>(
@@ -44,12 +46,12 @@ class _BusinessListState extends State<BusinessList> {
             initialData: initialData,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting && snapshot.data == null) {
-                return const Center(
+                return Center(
                   child: Column(
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16),
-                      Text('Loading businesses...'),
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 16),
+                      Text(appLocalizations.loadingBusinesses),
                     ],
                   ),
                 );
@@ -70,7 +72,7 @@ class _BusinessListState extends State<BusinessList> {
                 }
                 if (response.data!.isEmpty) {
                   return EmptyState(
-                    errorMessage: 'No businesses found',
+                    errorMessage: appLocalizations.noBusinessesFound,
                     onPressed: _refreshBusinesses,
                   );
                 }
@@ -84,8 +86,8 @@ class _BusinessListState extends State<BusinessList> {
                   }).toList(),
                 );
               }
-              return const Center(
-                child: Text('Something unexpected happened'),
+              return Center(
+                child: Text(appLocalizations.somethingUnexpectedHappened),
               );
             },
           );
