@@ -42,3 +42,9 @@ annotating feature makes it easy to manipulate what the outcome of the data you 
 #### Tests
 
 This code is built to be very testable and with more time i would've loved to add tests.
+
+### ENV
+
+In a production level application, it would be good to have environment variables to handle
+different things like API urls and local storage keys. This actually makes it easy to put
+up a build that points to staging or production just based on the env.
