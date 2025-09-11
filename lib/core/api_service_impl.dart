@@ -47,9 +47,18 @@ class ApiServiceImpl extends ApiService {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          if (options.path == '/error') {
+            return handler.reject(DioException(
+              requestOptions: options,
+              response: Response(
+                requestOptions: options,
+                statusCode: 500,
+              ),
+            ));
+          }
           final String jsonString = await rootBundle.loadString('db.json');
           final List<dynamic> jsonData = json.decode(jsonString);
-          await Future.delayed(const Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 3));
           return handler.resolve(
             Response(
               requestOptions: options,
