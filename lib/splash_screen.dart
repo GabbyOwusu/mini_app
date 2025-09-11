@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mini_app/features/business/data/providers/business_provider.dart';
 import 'package:mini_app/routes.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,7 +12,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void handleSplashScreen() async {
-    await Future.delayed(const Duration(seconds: 2));
+    final businessProvider = context.read<BusinessProvider>();
+    await businessProvider.fetchBusinessesFromLocalStorage();
     Navigator.pushReplacementNamed(context, Routes.dashboard);
   }
 
