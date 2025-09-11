@@ -30,64 +30,67 @@ class _BusinessListState extends State<BusinessList> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BusinessProvider>(
-      builder: (context, businessProvider, child) {
-        final initialData = businessProvider.businesses.isNotEmpty
-            ? ApiResponse<List<Business>>(
-                data: businessProvider.businesses,
-              )
-            : null;
-        return FutureBuilder<ApiResponse<List<Business>>>(
-          future: _businessFuture,
-          initialData: initialData,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: Column(
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text('Loading businesses...'),
-                  ],
-                ),
-              );
-            }
-            if (snapshot.hasError) {
-              return EmptyState(
-                errorMessage: snapshot.error.toString(),
-                onPressed: _refreshBusinesses,
-              );
-            }
-            if (snapshot.hasData) {
-              final response = snapshot.data!;
-              if (response.errorMessage != null) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Consumer<BusinessProvider>(
+        builder: (context, businessProvider, child) {
+          final initialData = businessProvider.businesses.isNotEmpty
+              ? ApiResponse<List<Business>>(
+                  data: businessProvider.businesses,
+                )
+              : null;
+          return FutureBuilder<ApiResponse<List<Business>>>(
+            future: _businessFuture,
+            initialData: initialData,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting && snapshot.data == null) {
+                return const Center(
+                  child: Column(
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text('Loading businesses...'),
+                    ],
+                  ),
+                );
+              }
+              if (snapshot.hasError) {
                 return EmptyState(
-                  errorMessage: response.errorMessage!,
+                  errorMessage: snapshot.error.toString(),
                   onPressed: _refreshBusinesses,
                 );
               }
-              if (response.data!.isEmpty) {
-                return EmptyState(
-                  errorMessage: 'No businesses found',
-                  onPressed: _refreshBusinesses,
-                );
-              }
-              return Column(
-                children: response.data!.map((business) {
-                  return BusinessCard(
-                    title: business.businessName,
-                    subtitle: business.businessLocation,
-                    bottomText: business.contactNumber,
+              if (snapshot.hasData) {
+                final response = snapshot.data!;
+                if (response.errorMessage != null) {
+                  return EmptyState(
+                    errorMessage: response.errorMessage!,
+                    onPressed: _refreshBusinesses,
                   );
-                }).toList(),
+                }
+                if (response.data!.isEmpty) {
+                  return EmptyState(
+                    errorMessage: 'No businesses found',
+                    onPressed: _refreshBusinesses,
+                  );
+                }
+                return Column(
+                  children: response.data!.map((business) {
+                    return BusinessCard(
+                      title: business.businessName,
+                      subtitle: business.businessLocation,
+                      bottomText: business.contactNumber,
+                    );
+                  }).toList(),
+                );
+              }
+              return const Center(
+                child: Text('Something unexpected happened'),
               );
-            }
-            return const Center(
-              child: Text('Something unexpected happened'),
-            );
-          },
-        );
-      },
+            },
+          );
+        },
+      ),
     );
   }
 }
