@@ -19,9 +19,9 @@ class Business {
 
   Map<String, dynamic> toJson() {
     return {
-      'businessName': businessName,
-      'businessLocation': businessLocation,
-      'contactNumber': contactNumber,
+      'biz_name': businessName,
+      'bss_location': businessLocation,
+      'contct_no': contactNumber,
     };
   }
 }
