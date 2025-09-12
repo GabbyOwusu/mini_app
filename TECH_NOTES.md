@@ -39,6 +39,10 @@ Its almost never advisable to write json serializable code by hand. There a very
 out there that make it much easier and more robust. My personal preference is json_serializable. Its
 annotating feature makes it easy to manipulate what the outcome of the data you expect will be like.
 
+### Error handling
+The error handling could be better. I believe we only need to show humanized error messages to users and
+log the actual errors to an external logging service we can track. 
+
 #### Tests
 
 This code is built to be very testable and with more time i would've loved to add tests.
